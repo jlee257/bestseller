@@ -2,6 +2,8 @@ package com.example.bestseller.ui.search;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
 
     private SearchView searchView;
     private BookAdapter bookAdapter;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         setSupportActionBar(findViewById(R.id.toolbar));
 
+        progressBar = findViewById(R.id.progressBar);
         bookAdapter = new BookAdapter();
         RecyclerView booksView = findViewById(R.id.booksView);
         booksView.setAdapter(bookAdapter);
@@ -39,10 +43,12 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         searchView.setOnQueryTextListener(null);
     }
 
+    protected void setProgressVisibility(boolean isVisible) {
+        progressBar.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+    }
 
     protected BookAdapter getBookAdapter() {
         return bookAdapter;
@@ -52,7 +58,6 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
     protected void onQueryChange(String query) {
         // Override this
     }
-
 
     private class BookQueryTextListener implements SearchView.OnQueryTextListener {
 

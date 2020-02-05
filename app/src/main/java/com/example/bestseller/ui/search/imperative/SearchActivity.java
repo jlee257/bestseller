@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 
 public class SearchActivity extends BaseSearchActivity {
 
-    private ProgressBar progressBar;
     private List<Book> masterBookList = new ArrayList<>();
     private boolean isList1Ready = false;
     private boolean isList2Ready = false;
@@ -32,7 +31,6 @@ public class SearchActivity extends BaseSearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        progressBar = findViewById(R.id.progressBar);
         workerThreadExecutor = Executors.newCachedThreadPool();
 
         BookSource.getBestFictions(books -> {
@@ -67,7 +65,7 @@ public class SearchActivity extends BaseSearchActivity {
         }
 
         runOnUiThread(() -> {
-            progressBar.setVisibility(View.GONE);
+            setProgressVisibility(false);
             getBookAdapter().submitList(displayList);
         });
     }

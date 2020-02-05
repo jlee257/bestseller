@@ -1,6 +1,7 @@
-package com.example.bestseller.ui.search.impl;
+package com.example.bestseller.ui.search.reactive2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -8,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.bestseller.R;
 import com.example.bestseller.ui.search.BaseSearchActivity;
+import com.example.bestseller.ui.search.reactive3.SearchViewModel3;
 
 public class ReactiveSearchActivity2 extends BaseSearchActivity {
 
@@ -17,7 +19,6 @@ public class ReactiveSearchActivity2 extends BaseSearchActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ProgressBar progressBar = findViewById(R.id.progressBar);
         viewModel = ViewModelProviders.of(this).get(SearchViewModel2.class);
 
         viewModel.getBooks().observe(this, books -> {
@@ -25,7 +26,8 @@ public class ReactiveSearchActivity2 extends BaseSearchActivity {
         });
 
         viewModel.isLoading().observe( this, isLoading -> {
-            progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+            Log.e("SearchActivity", "visibility=" + isLoading);
+            setProgressVisibility(isLoading);
         });
     }
 

@@ -5,7 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.bestseller.R
 import com.example.bestseller.ui.search.imperative.SearchActivity
-import com.example.bestseller.ui.search.impl.ReactiveSearchActivity2
+import com.example.bestseller.ui.search.reactive.ReactiveSearchActivity
+import com.example.bestseller.ui.search.reactive2.ReactiveSearchActivity2
+import com.example.bestseller.ui.search.reactive3.ReactiveSearchActivity3
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
