@@ -1,17 +1,20 @@
-package com.example.bestseller.ui.search.impl;
+package com.example.bestseller.ui.search.imperative;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import androidx.annotation.WorkerThread;
+
 import com.example.bestseller.R;
+import com.example.bestseller.data.BookSource;
 import com.example.bestseller.model.Book;
-import com.example.bestseller.model.BookSource;
 import com.example.bestseller.ui.search.BaseSearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class SearchActivity extends BaseSearchActivity {
 
@@ -21,22 +24,18 @@ public class SearchActivity extends BaseSearchActivity {
     private boolean isList2Ready = false;
     private String currentQuery = "";
 
-    private Handler queryDelayHandler;
+
+    private Executor workerThreadExecutor;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         progressBar = findViewById(R.id.progressBar);
+        workerThreadExecutor = Executors.newCachedThreadPool();
 
-
-        queryDelayHandler = new Handler();
-        queryDelayHandler.
-
-
-        BookSource.getBestNonFictions(books -> {
+        BookSource.getBestFictions(books -> {
             isList1Ready = true;
             addList(books);
         });
@@ -52,12 +51,12 @@ public class SearchActivity extends BaseSearchActivity {
     private synchronized void addList(List<Book> books) {
         masterBookList.addAll(books);
         if (isList1Ready && isList2Ready) {
-            progressBar.setVisibility(View.GONE);
+            applyFilter();
         }
     }
 
 
-
+    @WorkerThread
     private void applyFilter() {
         List<Book> displayList = new ArrayList<>();
 
@@ -67,12 +66,19 @@ public class SearchActivity extends BaseSearchActivity {
             }
         }
 
-        getBookAdapter().submitList(displayList);
+        runOnUiThread(() -> {
+            progressBar.setVisibility(View.GONE);
+            getBookAdapter().submitList(displayList);
+        });
     }
 
 
+    @Override
+    protected void onQueryChange(String query) {
+        currentQuery = query;
 
-
-
-
+        if (isList1Ready && isList2Ready) {
+            workerThreadExecutor.execute(this::applyFilter);
+        }
+    }
 }

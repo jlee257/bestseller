@@ -1,11 +1,11 @@
-package com.example.bestseller.ui.search.reactive;
+package com.example.bestseller.ui.search.impl;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.LiveDataReactiveStreams;
 import androidx.lifecycle.ViewModel;
 
+import com.example.bestseller.data.BookSource;
 import com.example.bestseller.model.Book;
-import com.example.bestseller.model.BookSource;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -15,18 +15,18 @@ import java.util.stream.Stream;
 import io.reactivex.Flowable;
 import io.reactivex.processors.BehaviorProcessor;
 
-class SearchViewModel extends ViewModel {
+public class SearchViewModel2 extends ViewModel {
 
     private final BehaviorProcessor<String> queryProcessor = BehaviorProcessor.createDefault("");
     private final BehaviorProcessor<List<Book>> filteredProcessor = BehaviorProcessor.create();
-    private final BehaviorProcessor<Boolean> loadingProcessor = BehaviorProcessor.createDefault(false);
+    private final BehaviorProcessor<Boolean> loadingProcessor = BehaviorProcessor.createDefault(true);
 
 
-    SearchViewModel() {
+    public SearchViewModel2() {
 
         final Flowable<List<Book>> filteredPublisher = Flowable.combineLatest(
                 Flowable.combineLatest(
-                        BookSource.getBestNonFictions(),
+                        BookSource.getBestFictions(),
                         BookSource.getBestNonFictions(),
                         (list1, list2) -> {
                             loadingProcessor.onNext(list1.isEmpty() || list2.isEmpty());

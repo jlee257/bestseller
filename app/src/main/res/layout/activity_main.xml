@@ -27,9 +27,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/buttonImperative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Imperative"
+        app:layout_constraintBottom_toTopOf="@id/buttonReactive" />
+
+    <Button
         android:id="@+id/buttonReactive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
         android:text="Reactive"
         app:layout_constraintBottom_toBottomOf="parent" />
 

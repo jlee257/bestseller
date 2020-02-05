@@ -1,5 +1,6 @@
 package com.example.bestseller.ui.search;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.bestseller.R;
 import com.example.bestseller.model.Book;
 
@@ -21,7 +23,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_book, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
@@ -63,12 +67,19 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.ViewHolder> {
             titleView.setText(book.title);
             authorView.setText(book.author);
             descriptionView.setText(book.description);
+
+            Glide.with(imageView)
+                    .load(book.image)
+                    .fitCenter()
+                    .placeholder(R.drawable.ic_book)
+                    .into(imageView);
         }
 
         void clear() {
             titleView.setText("");
             authorView.setText("");
             descriptionView.setText("");
+            imageView.setImageDrawable(null);
         }
     }
 }

@@ -1,11 +1,12 @@
 package com.example.bestseller.ui.search;
 
+import android.os.Bundle;
+import android.view.Menu;
+
+import androidx.annotation.MainThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.os.Bundle;
-import android.view.Menu;
 
 import com.example.bestseller.R;
 
@@ -18,6 +19,7 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        setSupportActionBar(findViewById(R.id.toolbar));
 
         bookAdapter = new BookAdapter();
         RecyclerView booksView = findViewById(R.id.booksView);
@@ -46,6 +48,7 @@ public abstract class BaseSearchActivity extends AppCompatActivity {
         return bookAdapter;
     }
 
+    @MainThread
     protected void onQueryChange(String query) {
         // Override this
     }

@@ -1,5 +1,7 @@
 package com.example.bestseller.model;
 
+import androidx.annotation.NonNull;
+
 public class Book {
 
     public final String isbn;
@@ -16,10 +18,11 @@ public class Book {
         this.description = description;
     }
 
-    public boolean contains(String text) {
-        return isbn.contains(text)
-                || title.contains(text)
-                || author.contains(text)
-                || description.contains(text);
+    public boolean contains(@NonNull String text) {
+        String lowerText = text.toLowerCase();
+        return isbn.toLowerCase().contains(lowerText)
+                || title.toLowerCase().contains(lowerText)
+                || author.toLowerCase().contains(lowerText)
+                || description.toLowerCase().contains(lowerText);
     }
 }

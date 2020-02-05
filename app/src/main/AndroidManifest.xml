@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bestseller">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,8 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ui.search.impl.SearchActivity"></activity>
-        <activity android:name=".ui.search.reactive.ReactiveSearchActivity" />
+        <activity android:name=".ui.search.reactive.ReactiveSearchActivity"></activity>
+        <activity android:name=".ui.search.imperative.SearchActivity" />
+        <activity android:name=".ui.search.impl.ReactiveSearchActivity2" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
